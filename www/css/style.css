@@ -1,0 +1,50 @@
+/* Empty. Add your own CSS if you like */
+.card, .list-inset {
+    margin: 10px 10px;
+}
+
+.fixed-outside{
+  /*position: absolute;
+  bottom*/: 0;
+  width: 100%;
+  text-align:center;
+}
+
+.fixed-outside .row {
+  padding: 0;
+  margin: 0;
+}
+
+.fixed-outside .col {
+  height: 20vw;
+  text-align: center;
+  border: 1px solid #dddddd;
+  font-size: 8vw;
+  line-height: 20vw;
+  padding: 0;
+}
+
+.current-over {
+  font-size: 16px;
+}
+
+.size-14 {
+    font-size: 14px;
+}
+
+.bat-header, .bowl-header {
+  font-size: 66%;
+}
+
+.list {
+  margin-bottom: 0;
+}
+
+.row {
+  padding-top: 0;
+}
+
+.end-of-over {
+  background-color: #e42012;
+  color: #fff;
+}
