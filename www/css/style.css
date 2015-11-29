@@ -4,8 +4,8 @@
 }
 
 .fixed-outside{
-  /*position: absolute;
-  bottom*/: 0;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   text-align:center;
 }
@@ -16,11 +16,11 @@
 }
 
 .fixed-outside .col {
-  height: 20vw;
+  height: 15vw;
   text-align: center;
   border: 1px solid #dddddd;
   font-size: 8vw;
-  line-height: 20vw;
+  line-height: 15vw;
   padding: 0;
 }
 

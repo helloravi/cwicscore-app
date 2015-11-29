@@ -62,6 +62,7 @@
         </div>
       </div>
     </div>
+  </ion-content>
   
   <div class="fixed-outside">
     <div class="row">
@@ -79,12 +80,11 @@
       <div class="col" ng-click="s.score(6)">6</div>
     </div>
     <div class="row">
-      <div class="col" ng-click="s.score(0,1)">W</div>
       <div class="col" ng-class="{ 'end-of-over': s.overFinished }" ng-click="s.newOver()">over</div>
+      <div class="col" ng-click="s.score(0,1)">W</div>
       <div class="col">5</div>
       <div class="col"><i class="icon ion-ios-undo"></i></div>
       <div class="col"><i class="icon ion-more"></i></div>
     </div>
   </div>
-  </ion-content>
 </ion-view>
