@@ -69,6 +69,10 @@
   padding: 10px;
 }
 
+.active-player {
+  font-weight: bold;
+}
+
 sup {
     top: -0.5em;
 }

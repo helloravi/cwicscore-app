@@ -17,16 +17,22 @@
         <div class="col text-center">Balls</div>
         <div class="col text-center">SR</div>
       </div>
-      <div class="row item">
-        <div class="col col-33">{{ s.bats.one.name }}</div>
+      <div class="row item" ng-class="{ 'active-player': s.onStrike === s.bats.one}">
+        <div class="col col-33">
+          {{ s.bats.one.name }}
+          <span ng-if="s.onStrike === s.bats.one">*</span>
+        </div>
         <div class="col text-center">{{ s.bats.one.runs }}</div>
         <div class="col text-center col-10">{{ s.bats.one.fours }}</div>
         <div class="col text-center col-10">{{ s.bats.one.sixes }}</div>
         <div class="col text-center">{{ s.bats.one.balls }}</div>
         <div class="col text-center">{{ s.bats.one.sr }}</div>
       </div>
-      <div class="row item">
-        <div class="col col-33">{{ s.bats.two.name }}</div>
+      <div class="row item" ng-class="{ 'active-player': s.onStrike === s.bats.two}">
+        <div class="col col-33">
+          {{ s.bats.two.name }}
+          <span ng-if="s.onStrike === s.bats.two">*</span>
+        </div>
         <div class="col text-center">{{ s.bats.two.runs }}</div>
         <div class="col text-center col-10">{{ s.bats.two.fours }}</div>
         <div class="col text-center col-10">{{ s.bats.two.sixes }}</div>
@@ -54,7 +60,7 @@
     </div>
     <div class="list">
       <div class="row item-divider current-over">
-        <div class="col col-33">Current Over</div>
+        <div class="col col-33">This Over</div>
         <div class="col">
           <span ng-repeat="delivery in s.over track by $index">
             {{ delivery.runs }}<sup>{{ delivery.extraType }}</sup>

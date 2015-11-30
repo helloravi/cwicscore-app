@@ -150,7 +150,7 @@ function ScoreCtrl(dataservice) {
     dataservice.newOver();
     setScores();
     rotateStrike();
-    s.balls = [];
+    s.over = [];
     s.legalBalls = 0;
     s.overFinished = false;
   };
