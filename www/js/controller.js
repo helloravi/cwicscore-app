@@ -5,7 +5,7 @@ ScoreCtrl.$inject = ['dataservice'];
 function ScoreCtrl(dataservice) {
   var s = this;
 
-  var init = function() {
+  function init() {
 
     dataservice.newMatch();
     s.balls = [];
@@ -30,58 +30,71 @@ function ScoreCtrl(dataservice) {
     };
 
     s.bowler = {
-      name: 'Bowler'
+      name: 'Bowler',
+      o: 0,
+      m: 0,
+      r: 0,
+      w: 0,
+      econ: 0
     };
 
-    s.home = dataservice.homeTeam;
-    s.away = dataservice.awayTeam;
+    s.currentInnings = dataservice.currentInnings();
+    // s.bowlingTeam = dataservice.awayTeam;
     s.venue = dataservice.venue;
-    s.battingTeam = dataservice.battingTeam;
     s.onStrike = s.bats.one;
+
+    s.matchEquation = "Match Ready to Start";
 
     setScores();
   };
 
-  function getStrikeRate(runs, balls) {
-      if (balls > 0) {
-        return Math.round((runs / balls) * 100);
-      } else {
-        return 0;
-      }
-    };
-
-  var setScores = function() {
-    if (dataservice.battingTeam === 'home') {
-      s.homeScore = dataservice.homeRuns + " for " + dataservice.homeWickets;
-      s.awayScore = 'Yet to Bat';
+  function strikeRate(runs, balls) {
+    if (balls > 0) {
+      return Math.round((runs / balls) * 100);
     } else {
-      s.awayScore = dataservice.awayRuns + " for " + dataservice.awayWickets;
-      s.homeScore = 'Yet to Bat';
-    };
-    
+      return 0;
+    }
   };
 
-  var rotateStrike = function() {
+  function runRate(runs, overs, balls) {
+    if (balls > 0) {
+      var overs = overs + (balls / 6);
+      return Number(Math.round((runs / overs)+'e2')+'e-2').toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+
+  function setScores() {
+      s.currentInnings.runs = dataservice.currentInnings().runs;
+      s.currentInnings.wickets = dataservice.currentInnings().wickets;
+  };
+
+  function rotateStrike() {
     if (s.onStrike === s.bats.one) {
       s.onStrike = s.bats.two;
     } else {
       s.onStrike = s.bats.one;
     }
-  }; 
+  };
   
   s.score = function(batRuns, wickets, extraRuns, extrasType) {
+    var bat = s.onStrike;
     wickets = wickets || 0;
-    dataservice.newBall(s.onStrike, s.bowler, batRuns, wickets, 0);
+    dataservice.newBall(bat, s.bowler, batRuns, wickets, 0);
     s.balls.push(batRuns);
     setScores();
 
-    (s.onStrike === s.bats.one) ? s.bats.one.runs += batRuns : s.bats.two.runs += batRuns;
-    (s.onStrike === s.bats.one) ? s.bats.one.balls += 1 : s.bats.two.balls += 1;
-    (s.onStrike === s.bats.one) ? s.bats.one.sr = getStrikeRate(s.bats.one.runs, s.bats.one.balls) : s.bats.two.sr = getStrikeRate(s.bats.two.runs, s.bats.two.balls);
+    bat.runs += batRuns;
+    bat.balls += 1;
+    bat.sr = strikeRate(bat.runs, bat.balls);
+    if (batRuns === 4) { bat.fours += 1};
+    if (batRuns === 6) { bat.sixes += 1};
 
     if (batRuns%2 != 0) { rotateStrike() };
     if (s.balls.length >= 6) { s.overFinished = true };
 
+    s.matchEquation = "Current Run Rate: " + runRate(s.currentInnings.runs, s.currentInnings.overs, s.currentInnings.balls);
   };
 
   s.newOver = function() { 

@@ -1,11 +1,11 @@
-<ion-view view-title="Walthamstow 60-1, 12.5 overs">
+<ion-view view-title="{{ s.currentInnings.battingTeam.name }} {{ s.currentInnings.runs }}-{{ s.currentInnings.wickets }}, {{ s.currentInnings.overs }}.{{ s.currentInnings.balls }} overs">
   <ion-content>
     <div class="list">
       <div class="item item-divider text-center">
-        v Chingford (yet to bat)
+        v {{ s.currentInnings.bowlingTeam.name }} (yet to bat)
       </div>
       <div class="item item-text-wrap text-center match-equation">
-        Require 34 from 5 overs at 3.2 per over
+        {{ s.matchEquation }}
       </div>
     </div>
     <div class="list">
@@ -41,15 +41,15 @@
         <div class="col text-center">M</div>
         <div class="col text-center">R</div>
         <div class="col text-center">W</div>
-        <div class="col text-center">ER</div>
+        <div class="col text-center">Econ</div>
       </div>
       <div class="row item">
-        <div class="col col-33">Bowler</div>
-        <div class="col text-center">10.2</div>
-        <div class="col text-center">2</div>
-        <div class="col text-center">123</div>
-        <div class="col text-center">5</div>
-        <div class="col text-center">6.7</div>
+        <div class="col col-33">{{ s.bowler.name }}</div>
+        <div class="col text-center">{{ s.bowler.o }}</div>
+        <div class="col text-center">{{ s.bowler.m }}</div>
+        <div class="col text-center">{{ s.bowler.r }}</div>
+        <div class="col text-center">{{ s.bowler.w }}</div>
+        <div class="col text-center">{{ s.bowler.econ }}</div>
       </div>
     </div>
     <div class="list">
