@@ -1,11 +1,11 @@
-<ion-view view-title="Chingford 255-3, 52 overs">
+<ion-view view-title="Walthamstow 60-1, 12.5 overs">
   <ion-content>
-    <div class="card">
+    <div class="list">
       <div class="item item-divider text-center">
-        Walthamstow 60-1, 12.5 overs
+        v Chingford (yet to bat)
       </div>
-      <div class="item item-text-wrap text-center">
-        Need 34 from 5 overs at 3.2 per over
+      <div class="item item-text-wrap text-center match-equation">
+        Require 34 from 5 overs at 3.2 per over
       </div>
     </div>
     <div class="list">
@@ -19,19 +19,19 @@
       </div>
       <div class="row item">
         <div class="col col-33">{{ s.bats.one.name }}</div>
-        <div class="col text-center">{{ s.bats.one.score }}</div>
-        <div class="col text-center col-10">22</div>
-        <div class="col text-center col-10">62</div>
-        <div class="col text-center">101</div>
-        <div class="col text-center">236</div>
+        <div class="col text-center">{{ s.bats.one.runs }}</div>
+        <div class="col text-center col-10">{{ s.bats.one.fours }}</div>
+        <div class="col text-center col-10">{{ s.bats.one.sixes }}</div>
+        <div class="col text-center">{{ s.bats.one.balls }}</div>
+        <div class="col text-center">{{ s.bats.one.sr }}</div>
       </div>
       <div class="row item">
         <div class="col col-33">{{ s.bats.two.name }}</div>
-        <div class="col text-center">{{ s.bats.two.score }}</div>
-        <div class="col text-center col-10">2</div>
-        <div class="col text-center col-10">6</div>
-        <div class="col text-center">101</div>
-        <div class="col text-center">236</div>
+        <div class="col text-center">{{ s.bats.two.runs }}</div>
+        <div class="col text-center col-10">{{ s.bats.two.fours }}</div>
+        <div class="col text-center col-10">{{ s.bats.two.sixes }}</div>
+        <div class="col text-center">{{ s.bats.two.balls }}</div>
+        <div class="col text-center">{{ s.bats.two.sr }}</div>
       </div>
     </div>
     <div class="list">
@@ -66,25 +66,25 @@
   
   <div class="fixed-outside">
     <div class="row">
-      <div class="col" ng-click="s.score(0)"><i class="icon ion-record size-14"></i></div>
-      <div class="col" ng-click="s.score(1)">1</div>
-      <div class="col" ng-click="s.score(2)">2</div>
-      <div class="col" ng-click="s.score(3)">3</div>
-      <div class="col" ng-click="s.score(4)">4</div>
+      <div class="col score-button" ng-click="s.score(0)"><i class="icon ion-record size-14"></i></div>
+      <div class="col score-button" ng-click="s.score(1)">1</div>
+      <div class="col score-button" ng-click="s.score(2)">2</div>
+      <div class="col score-button" ng-click="s.score(3)">3</div>
+      <div class="col score-button" ng-click="s.score(4)">4</div>
     </div>
     <div class="row">
-      <div class="col">wd</div>
-      <div class="col">nb</div>
-      <div class="col">lb</div>
-      <div class="col">b</div>
-      <div class="col" ng-click="s.score(6)">6</div>
+      <div class="col score-button" ng-click="s.extras('wd')">wd</div>
+      <div class="col score-button" ng-click="s.extras('nb')">nb</div>
+      <div class="col score-button" ng-click="s.extras('lb')">lb</div>
+      <div class="col score-button" ng-click="s.extras('b')">b</div>
+      <div class="col score-button" ng-click="s.score(6)">6</div>
     </div>
     <div class="row">
-      <div class="col" ng-class="{ 'end-of-over': s.overFinished }" ng-click="s.newOver()">over</div>
-      <div class="col" ng-click="s.score(0,1)">W</div>
-      <div class="col">5</div>
-      <div class="col"><i class="icon ion-ios-undo"></i></div>
-      <div class="col"><i class="icon ion-more"></i></div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.overFinished }" ng-click="s.newOver()">over</div>
+      <div class="col score-button wicket-button" ng-click="s.score(0,1)">W</div>
+      <div class="col score-button" ng-click="s.score(5)">5</div>
+      <div class="col score-button"><i class="icon ion-ios-undo"></i></div>
+      <div class="col score-button"><i class="icon ion-more"></i></div>
     </div>
   </div>
 </ion-view>

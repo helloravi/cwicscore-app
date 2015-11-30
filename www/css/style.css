@@ -1,6 +1,14 @@
 /* Empty. Add your own CSS if you like */
-.card, .list-inset {
-    margin: 10px 10px;
+.bar.bar-calm {
+    border-color: #00507f;
+    background-color: #00507f;
+    background-image: linear-gradient(0deg, #00507f, #00507f 50%, transparent 50%);
+    color: #fafbfd;
+}
+
+.item-divider {
+  color: #464a4d;
+  background-color: #e3e7ea;
 }
 
 .fixed-outside{
@@ -15,17 +23,22 @@
   margin: 0;
 }
 
-.fixed-outside .col {
-  height: 15vw;
+.score-button {
+  height: 20vw;
   text-align: center;
-  border: 1px solid #dddddd;
+  border: 1px solid #e3e7ea;
   font-size: 8vw;
-  line-height: 15vw;
+  line-height: 20vw;
   padding: 0;
+  background-color: #fafbfd;
+  color: #9397a0;
 }
 
 .current-over {
+  color: #fafbfd;
+  background-color: #196795;
   font-size: 16px;
+  font-weight: bold;
 }
 
 .size-14 {
@@ -45,6 +58,14 @@
 }
 
 .end-of-over {
-  background-color: #e42012;
-  color: #fff;
+  background-color: #b51800 !important;
+  color: #fafbfd !important;
 }
+
+.match-equation {
+  background-color: #b51800;
+  color: #fafbfd;
+  font-weight: bold;
+  padding: 10px;
+}
+

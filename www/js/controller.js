@@ -13,11 +13,19 @@ function ScoreCtrl(dataservice) {
     s.bats = {
       one: {
         name: 'Bat 1',
-        score: 0
+        runs: 0,
+        balls: 0,
+        fours: 0,
+        sixes: 0,
+        sr: 0
       },
       two: {
         name: 'Bat 2',
-        score: 0
+        runs: 0,
+        balls: 0,
+        fours: 0,
+        sixes: 0,
+        sr: 0
       }
     };
 
@@ -33,6 +41,14 @@ function ScoreCtrl(dataservice) {
 
     setScores();
   };
+
+  function getStrikeRate(runs, balls) {
+      if (balls > 0) {
+        return Math.round((runs / balls) * 100);
+      } else {
+        return 0;
+      }
+    };
 
   var setScores = function() {
     if (dataservice.battingTeam === 'home') {
@@ -59,21 +75,25 @@ function ScoreCtrl(dataservice) {
     s.balls.push(batRuns);
     setScores();
 
-    (s.onStrike === s.bats.one) ? s.bats.one.score += batRuns : s.bats.two.score += batRuns;
+    (s.onStrike === s.bats.one) ? s.bats.one.runs += batRuns : s.bats.two.runs += batRuns;
+    (s.onStrike === s.bats.one) ? s.bats.one.balls += 1 : s.bats.two.balls += 1;
+    (s.onStrike === s.bats.one) ? s.bats.one.sr = getStrikeRate(s.bats.one.runs, s.bats.one.balls) : s.bats.two.sr = getStrikeRate(s.bats.two.runs, s.bats.two.balls);
 
     if (batRuns%2 != 0) { rotateStrike() };
     if (s.balls.length >= 6) { s.overFinished = true };
 
   };
 
-  s.newOver = function() {
-    if (s.balls.length >= 6) {
-      s.balls = [];
-      dataservice.newOver();
-      s.overFinished = false;
-      setScores();
-      rotateStrike();
-    };
+  s.newOver = function() { 
+    dataservice.newOver();
+    setScores();
+    rotateStrike();
+    s.balls = [];
+    s.overFinished = false;
+  };
+
+  s.extras = function(type) {
+
   };
 
   init();
