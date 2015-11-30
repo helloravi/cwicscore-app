@@ -11,9 +11,10 @@
     <script src="js/service.js"></script>
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/controller.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/team.js"></script>
   </head>
-  <body ng-app="cwicscore" ng-cloak>
+  <body ng-app="cwicscore" ng-cloak="">
     <ion-pane>
       <ion-side-menus>
         <ion-side-menu-content>
@@ -32,27 +33,32 @@
           </ion-header-bar>
           <ion-content>
             <ion-list>
-              <ion-item menu-close href="#/score" class="item-icon-left">
+              <ion-item menu-close="" href="#/score" class="item-icon-left">
                 <i class="icon ion-compose"></i>
                 Score
                 
               </ion-item>
-              <ion-item menu-close href="#/card" class="item-icon-left">
+              <ion-item menu-close="" href="#/card" class="item-icon-left">
                 <i class="icon ion-ios-book-outline"></i>
                 Scorecard
                 
               </ion-item>
-              <ion-item menu-close href="#/options" class="item-icon-left">
+              <ion-item menu-close="" href="#/teams" class="item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Teams
+                
+              </ion-item>
+              <ion-item menu-close="" href="#/options" class="item-icon-left">
                 <i class="icon ion-toggle"></i>
                 Options
                 
               </ion-item>
-              <ion-item menu-close href="#/settings" class="item-icon-left">
+              <ion-item menu-close="" href="#/settings" class="item-icon-left">
                 <i class="icon ion-settings"></i>
                 Settings
                 
               </ion-item>
-          </ion-content>
+          </ion-list></ion-content>
         </ion-side-menu>
       </ion-side-menus>
       

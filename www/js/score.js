@@ -12,7 +12,7 @@ function ScoreCtrl(dataservice) {
 
     s.bats = {
       one: {
-        name: 'Bat 1',
+        name: dataservice.currentMatch().info.teams[0].players[0],
         runs: 0,
         balls: 0,
         fours: 0,
@@ -20,7 +20,7 @@ function ScoreCtrl(dataservice) {
         sr: 0
       },
       two: {
-        name: 'Bat 2',
+        name: dataservice.currentMatch().info.teams[0].players[1],
         runs: 0,
         balls: 0,
         fours: 0,

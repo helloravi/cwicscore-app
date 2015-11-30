@@ -1,0 +1,23 @@
+<ion-view view-title="Teams">
+  <ion-content>
+    <ion-list show-reorder="t.reordering">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="player in t.players track by $index">
+        <label class="item item-input item-floating-label">
+         
+          <input type="text" placeholder="Title" ng-model="player">
+        </label>
+        
+        <i class="button-assertive icon ion-trash-b" ng-click="t.remove(player.id)"></i>
+        <ion-reorder-button class="ion-drag" on-reorder="t.move(player, $fromIndex, $toIndex)"></ion-reorder-button>
+        <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="t.remove(player.id)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <div class="bar bar-footer bar-stable">
+    <a href="#/add" class="button button-assertive icon-left ion-compose">New player</a>
+    <button class="button button-stable icon-left ion-shuffle" ng-if="!t.reordering" ng-click="t.toggleReordering()">Reorder</button>
+    <button class="button button-positive icon-left ion-checkmark" ng-if="t.reordering" ng-click="t.toggleReordering()">Done</button>
+  </div>
+</ion-view>

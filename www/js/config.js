@@ -8,6 +8,13 @@ function cwicscoreConfig($stateProvider, $urlRouterProvider) {
     controllerAs: 's'
   });
 
+  $stateProvider.state('teams', {
+    url: '/teams',
+    templateUrl: 'templates/teams.html',
+    controller: 'TeamCtrl',
+    controllerAs: 't'
+  });
+
   $stateProvider.state('edit', {
     url: '/edit/:noteId',
     templateUrl: 'templates/edit.html',

@@ -9,22 +9,63 @@ function dataservice() {
     newInnings: newInnings,
     newOver: newOver,
     newBall: newBall,
-    currentInnings: currentInnings
+    currentInnings: currentInnings,
+    currentMatch: currentMatch
   };
 
   return service;
 
   function currentInnings() {
     return ss.currentInnings;
-  }
+  };
+
+  function currentMatch() {
+    return ss.currentMatch;
+  };
 
   function newMatch(teamOneName, teamTwoName, venue, battingFirst) {
-    ss.teamOne = {};
-    ss.teamTwo = {};
+    ss.teamOne = {
+      name: teamOneName || 'Team A',
+      players: [
+        'Sundar',
+        'Guru',
+        'player3',
+        'player4',
+        'player5',
+        'player6',
+        'player7',
+        'player8',
+        'player9',
+        'player10',
+        'player11'
+        ]
+    };
+    ss.teamTwo = {
+      name: teamTwoName || 'Team B',
+      players: [
+        'player1',
+        'player2',
+        'player3',
+        'player4',
+        'player5',
+        'player6',
+        'player7',
+        'player8',
+        'player9',
+        'player10',
+        'player11'
+        ]
+    };
+    ss.currentMatch = {
+      info: {
+        venue: venue || '',
+        date: new Date(),
+        teams: [ss.teamOne, ss.teamTwo]
+      }
+    };
+    
     ss.match = new Match(ss.teamOne, ss.teamTwo, venue);
-    ss.teamOne.name = teamOneName || 'England';
-    ss.teamTwo.name = teamTwoName || 'India';
-    ss.venue = venue || '';
+    
     ss.balls = [];
     ss.overs = [];
     ss.inningss = [];
