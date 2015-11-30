@@ -9,6 +9,7 @@ function ScoreCtrl(dataservice) {
 
     dataservice.newMatch();
     s.balls = [];
+    s.legalBalls = 0;
 
     s.bats = {
       one: {
@@ -134,7 +135,9 @@ function ScoreCtrl(dataservice) {
     if (batRuns === 6) { bat.sixes += 1};
 
     if (batRuns%2 != 0) { rotateStrike() };
-    if (s.balls.length >= 6) { s.overFinished = true };
+
+    if (!s.nb && !s.wd) { s.legalBalls += 1 };
+    if (s.legalBalls >= 6) { s.overFinished = true };
 
     resetExtras();
     s.matchEquation = "Current Run Rate: " + runRate(s.currentInnings.runs, s.currentInnings.overs, s.currentInnings.balls);
@@ -145,6 +148,7 @@ function ScoreCtrl(dataservice) {
     setScores();
     rotateStrike();
     s.balls = [];
+    s.legalBalls = 0;
     s.overFinished = false;
   };
 
