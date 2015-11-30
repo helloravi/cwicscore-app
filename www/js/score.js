@@ -8,8 +8,10 @@ function ScoreCtrl(dataservice) {
   function init() {
 
     dataservice.newMatch();
-    s.balls = [];
+
+    s.over = [];
     s.legalBalls = 0;
+    s.currentInnings = dataservice.currentInnings();
 
     s.bats = {
       one: {
@@ -39,15 +41,9 @@ function ScoreCtrl(dataservice) {
       econ: 0
     };
 
-    s.currentInnings = dataservice.currentInnings();
-    // s.bowlingTeam = dataservice.awayTeam;
-    s.venue = dataservice.venue;
     s.onStrike = s.bats.one;
-
     s.matchEquation = "Match Ready to Start";
-
     resetExtras();
-
     setScores();
   };
 
@@ -71,9 +67,9 @@ function ScoreCtrl(dataservice) {
       var overs = overs + (balls / 6);
       return Number(Math.round((runs / overs)+'e2')+'e-2').toFixed(2);
     } else {
-      return 0;
+      return 0.00;
     }
-  }
+  };
 
   function setScores() {
       s.currentInnings.runs = dataservice.currentInnings().runs;
@@ -88,57 +84,51 @@ function ScoreCtrl(dataservice) {
     }
   };
   
-  s.score = function(batRuns, wickets, extraRuns, extraType) {
+  s.score = function(batRuns, wickets) {
     var bat = s.onStrike;
-    wickets = wickets || 0;
-    extraRuns = extraRuns || 0;
-    extraType = extraType || '';
-    ballDisplay = {};
+    var delivery = {};
+    var wickets = wickets || 0;
+    var extraRuns = 0;
 
-    batRuns > 0 ? ballDisplay.runs = batRuns : ballDisplay.runs = '';
+    batRuns > 0 ? delivery.runs = batRuns : delivery.runs = '';
 
     if (s.lb) {
       extraRuns += batRuns;
       batRuns = 0;
-      extraType = 'lb';
-      ballDisplay = {
+      delivery = {
         runs: extraRuns,
-        type: extraType
+        extraType: 'lb'
       };
     }
     else if (s.b) {
       extraRuns += batRuns;
       batRuns = 0;
-      extraType = 'b';
-      ballDisplay = {
+      delivery = {
         runs: extraRuns,
-        type: extraType
+        extraType: 'b'
       };
     };
 
     if (s.nb) {
       extraRuns += 1; // Todo: Add option to set runs for no ball
-      extraType = 'nb';
-      ballDisplay = {
+      delivery = {
         runs: extraRuns + batRuns,
-        type: extraType
+        extraType: 'nb'
       };
     }
     else if (s.wd) {
       extraRuns += 1;
       extraRuns += batRuns;
       batRuns = 0;
-      extraType = 'wd';
-      ballDisplay = {
+      delivery = {
         runs: extraRuns,
-        type: extraType
+        extraType: 'wd'
       };
     };
 
+    dataservice.newBall(bat, s.bowler, batRuns, wickets, extraRuns, delivery.extraType);
 
-    dataservice.newBall(bat, s.bowler, batRuns, wickets, extraRuns, extraType);
-
-    s.balls.push(ballDisplay);
+    s.over.push(delivery);
     setScores();
 
     bat.runs += batRuns;
@@ -147,7 +137,7 @@ function ScoreCtrl(dataservice) {
     if (batRuns === 4) { bat.fours += 1};
     if (batRuns === 6) { bat.sixes += 1};
 
-    if (batRuns%2 != 0) { rotateStrike() };
+    if (batRuns%2 != 0) { rotateStrike() }; // Fix for extras
 
     if (!s.nb && !s.wd) { s.legalBalls += 1 };
     if (s.legalBalls >= 6) { s.overFinished = true };
@@ -163,10 +153,6 @@ function ScoreCtrl(dataservice) {
     s.balls = [];
     s.legalBalls = 0;
     s.overFinished = false;
-  };
-
-  s.extras = function(type) {
-
   };
 
   init();

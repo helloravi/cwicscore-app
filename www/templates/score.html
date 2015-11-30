@@ -56,9 +56,9 @@
       <div class="row item-divider current-over">
         <div class="col col-33">Current Over</div>
         <div class="col">
-          <span ng-repeat="ball in s.balls track by $index">
-            {{ ball.runs }}<sup>{{ ball.type }}</sup>
-            <i ng-if="ball.runs === ''" class="icon ion-record size-14"></i>
+          <span ng-repeat="delivery in s.over track by $index">
+            {{ delivery.runs }}<sup>{{ delivery.extraType }}</sup>
+            <i ng-if="delivery.runs === ''" class="icon ion-record size-14"></i>
           </span>
         </div>
       </div>
@@ -83,11 +83,11 @@
       <div class="col score-button" ng-click="s.score(6)">6</div>
     </div>
     <div class="row">
-      <div class="col score-button" ng-class="{ 'end-of-over': s.overFinished }" ng-click="s.newOver()">over</div>
       <div class="col score-button wicket-button" ng-click="s.score(0,1)">W</div>
       <div class="col score-button" ng-click="s.score(5)">5</div>
       <div class="col score-button"><i class="icon ion-ios-undo"></i></div>
       <div class="col score-button"><i class="icon ion-more"></i></div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.overFinished }" ng-click="s.newOver()">over</div>
     </div>
   </div>
 </ion-view>
