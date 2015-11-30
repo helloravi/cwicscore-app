@@ -57,7 +57,8 @@
         <div class="col col-33">Current Over</div>
         <div class="col">
           <span ng-repeat="ball in s.balls track by $index">
-                {{ ball }}
+            {{ ball }}
+            <i ng-if="ball === ''" class="icon ion-record size-14"></i>
           </span>
         </div>
       </div>
@@ -66,17 +67,19 @@
   
   <div class="fixed-outside">
     <div class="row">
-      <div class="col score-button" ng-click="s.score(0)"><i class="icon ion-record size-14"></i></div>
+      <div class="col score-button" ng-click="s.score(0)">
+        <i class="icon ion-record size-14"></i>
+      </div>
       <div class="col score-button" ng-click="s.score(1)">1</div>
       <div class="col score-button" ng-click="s.score(2)">2</div>
       <div class="col score-button" ng-click="s.score(3)">3</div>
       <div class="col score-button" ng-click="s.score(4)">4</div>
     </div>
     <div class="row">
-      <div class="col score-button" ng-click="s.extras('wd')">wd</div>
-      <div class="col score-button" ng-click="s.extras('nb')">nb</div>
-      <div class="col score-button" ng-click="s.extras('lb')">lb</div>
-      <div class="col score-button" ng-click="s.extras('b')">b</div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.wd }"  ng-click="s.wd = !s.wd">wd</div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.nb }"  ng-click="s.nb = !s.nb">nb</div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.lb }"  ng-click="s.lb = !s.lb">lb</div>
+      <div class="col score-button" ng-class="{ 'end-of-over': s.b }"  ng-click="s.b = !s.b">b</div>
       <div class="col score-button" ng-click="s.score(6)">6</div>
     </div>
     <div class="row">

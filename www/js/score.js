@@ -45,7 +45,16 @@ function ScoreCtrl(dataservice) {
 
     s.matchEquation = "Match Ready to Start";
 
+    resetExtras();
+
     setScores();
+  };
+
+  function resetExtras() {
+    s.nb = false;
+    s.wd = false;
+    s.lb = false;
+    s.b = false;
   };
 
   function strikeRate(runs, balls) {
@@ -78,11 +87,44 @@ function ScoreCtrl(dataservice) {
     }
   };
   
-  s.score = function(batRuns, wickets, extraRuns, extrasType) {
+  s.score = function(batRuns, wickets, extraRuns, extraType) {
     var bat = s.onStrike;
     wickets = wickets || 0;
-    dataservice.newBall(bat, s.bowler, batRuns, wickets, 0);
-    s.balls.push(batRuns);
+    extraRuns = extraRuns || 0;
+    extraType = extraType || '';
+
+    batRuns > 0 ? ballDisplay = batRuns : ballDisplay = '';
+
+    if (s.lb) {
+      extraRuns += batRuns;
+      batRuns = 0;
+      extraType = 'lb';
+      ballDisplay = extraRuns + extraType;
+    }
+    else if (s.b) {
+      extraRuns += batRuns;
+      batRuns = 0;
+      extraType = 'b';
+      ballDisplay = extraRuns + extraType;
+    };
+
+    if (s.nb) {
+      extraRuns += 1; // Todo: Add option to set runs for no ball
+      extraType = 'nb';
+      ballDisplay = (batRuns + extraRuns) + extraType;
+    }
+    else if (s.wd) {
+      extraRuns += 1;
+      extraRuns += batRuns;
+      batRuns = 0;
+      extraType = 'wd';
+      ballDisplay = extraRuns + extraType;
+    };
+
+
+    dataservice.newBall(bat, s.bowler, batRuns, wickets, extraRuns, extraType);
+
+    s.balls.push(ballDisplay);
     setScores();
 
     bat.runs += batRuns;
@@ -94,6 +136,7 @@ function ScoreCtrl(dataservice) {
     if (batRuns%2 != 0) { rotateStrike() };
     if (s.balls.length >= 6) { s.overFinished = true };
 
+    resetExtras();
     s.matchEquation = "Current Run Rate: " + runRate(s.currentInnings.runs, s.currentInnings.overs, s.currentInnings.balls);
   };
 
