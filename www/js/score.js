@@ -93,33 +93,46 @@ function ScoreCtrl(dataservice) {
     wickets = wickets || 0;
     extraRuns = extraRuns || 0;
     extraType = extraType || '';
+    ballDisplay = {};
 
-    batRuns > 0 ? ballDisplay = batRuns : ballDisplay = '';
+    batRuns > 0 ? ballDisplay.runs = batRuns : ballDisplay.runs = '';
 
     if (s.lb) {
       extraRuns += batRuns;
       batRuns = 0;
       extraType = 'lb';
-      ballDisplay = extraRuns + extraType;
+      ballDisplay = {
+        runs: extraRuns,
+        type: extraType
+      };
     }
     else if (s.b) {
       extraRuns += batRuns;
       batRuns = 0;
       extraType = 'b';
-      ballDisplay = extraRuns + extraType;
+      ballDisplay = {
+        runs: extraRuns,
+        type: extraType
+      };
     };
 
     if (s.nb) {
       extraRuns += 1; // Todo: Add option to set runs for no ball
       extraType = 'nb';
-      ballDisplay = (batRuns + extraRuns) + extraType;
+      ballDisplay = {
+        runs: extraRuns + batRuns,
+        type: extraType
+      };
     }
     else if (s.wd) {
       extraRuns += 1;
       extraRuns += batRuns;
       batRuns = 0;
       extraType = 'wd';
-      ballDisplay = extraRuns + extraType;
+      ballDisplay = {
+        runs: extraRuns,
+        type: extraType
+      };
     };
 
 
