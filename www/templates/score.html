@@ -63,8 +63,8 @@
         <div class="col col-33">This Over</div>
         <div class="col">
           <span ng-repeat="delivery in s.over track by $index">
-            {{ delivery.runs }}<sup>{{ delivery.extraType }}</sup>
-            <i ng-if="delivery.runs === ''" class="icon ion-record size-14"></i>
+            <span ng-if="delivery.batRuns + delivery.extraRuns != '0'">{{ delivery.batRuns + delivery.extraRuns }}</span><sup>{{ delivery.extraType }}</sup>
+            <i ng-if="delivery.batRuns + delivery.extraRuns == '0'" class="icon ion-record size-14"></i>
           </span>
         </div>
       </div>

@@ -1,0 +1,13 @@
+Social Sharing
+Storage
+API backend
+
+Update buttons for different options when extras / wickets etc are pressed.
+
+Wickets
+Undo
+More
+Scorecard
+Players
+Match Settings
+Options

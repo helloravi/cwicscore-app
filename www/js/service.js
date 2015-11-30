@@ -9,19 +9,12 @@ function dataservice() {
     newInnings: newInnings,
     newOver: newOver,
     newBall: newBall,
+    currentMatch: currentMatch,
     currentInnings: currentInnings,
-    currentMatch: currentMatch
+    currentOver: currentOver
   };
 
   return service;
-
-  function currentInnings() {
-    return ss.currentInnings;
-  };
-
-  function currentMatch() {
-    return ss.currentMatch;
-  };
 
   function newMatch(teamOneName, teamTwoName, venue, battingFirst) {
     ss.teamOne = {
@@ -79,7 +72,7 @@ function dataservice() {
       bowlingTeam: bowlingTeam || ss.teamTwo,
       runs: 0,
       wickets: 0,
-      overs: 0,
+      overs: -1, // So that we start with over 0.1
       balls: 0
     };
     
@@ -87,13 +80,14 @@ function dataservice() {
     ss.inningss.push(ss.innings);
     console.log(ss.battingTeam);
 
-    // newOver();
+    newOver();
   };
 
   function newOver() {
     ss.currentInnings.overs ++;
     ss.currentInnings.balls = 0;
     ss.over = new Over(ss.currentInnings.overs, 'Pavillion End');
+    ss.currentOver = [];
     ss.overs.push(ss.over);
   };
 
@@ -101,9 +95,21 @@ function dataservice() {
     ss.currentInnings.balls ++;
     ss.ball = new Ball(ss.currentInnings, bowlerId, batsmanId, batRuns, wicket, extraRuns, extraType);
     ss.balls.push(ss.ball);
-
+    ss.currentOver.push(ss.ball);
     ss.currentInnings.runs += (batRuns + extraRuns);
     ss.currentInnings.wickets += wicket;
+  };
+
+  function currentMatch() {
+    return ss.currentMatch;
+  };
+
+  function currentInnings() {
+    return ss.currentInnings;
+  };
+
+  function currentOver() {
+    return ss.currentOver;
   };
 
   function Match(venue, homeTeam, awayTeam) {
