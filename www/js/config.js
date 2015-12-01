@@ -8,6 +8,13 @@ function cwicscoreConfig($stateProvider, $urlRouterProvider) {
     controllerAs: 's'
   });
 
+  $stateProvider.state('card', {
+    url: '/card',
+    templateUrl: 'templates/card.html',
+    controller: 'CardCtrl',
+    controllerAs: 'c'
+  });
+
   $stateProvider.state('teams', {
     url: '/teams',
     templateUrl: 'templates/teams.html',
@@ -15,11 +22,18 @@ function cwicscoreConfig($stateProvider, $urlRouterProvider) {
     controllerAs: 't'
   });
 
-  $stateProvider.state('edit', {
-    url: '/edit/:noteId',
-    templateUrl: 'templates/edit.html',
-    controller: 'EditCtrl',
-    controllerAs: 'edit'
+  $stateProvider.state('options', {
+    url: '/options',
+    templateUrl: 'templates/options.html',
+    controller: 'OptionCtrl',
+    controllerAs: 'o'
+  });
+
+  $stateProvider.state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',
+    controller: 'SettingsCtrl',
+    controllerAs: 'set'
   });
 
   $urlRouterProvider.otherwise('/score');

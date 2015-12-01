@@ -11,7 +11,9 @@ function dataservice() {
     newBall: newBall,
     currentMatch: currentMatch,
     currentInnings: currentInnings,
-    currentOver: currentOver
+    currentOver: currentOver,
+    // currentBatsmen: currentBatsmen,
+    // currentBowler: currentBowler
   };
 
   return service;
@@ -70,12 +72,46 @@ function dataservice() {
       order: 1,
       battingTeam: battingTeam || ss.teamOne,
       bowlingTeam: bowlingTeam || ss.teamTwo,
+      matchEquation: 'Match Ready to Start',
       runs: 0,
       wickets: 0,
       overs: -1, // So that we start with over 0.1
-      balls: 0
+      balls: 0,
+      batOne: {
+        name: 'Sangram',
+        onStrike: true,
+        runs: 0,
+        balls: 0,
+        fours: 0,
+        sixes: 0,
+        sr: function() {
+          return strikeRate(this.runs, this.balls)
+        }
+      },
+      batTwo: {
+        name: 'Guru',
+        onStrike: false,
+        runs: 0,
+        balls: 0,
+        fours: 0,
+        sixes: 0,
+        sr: function() {
+          return strikeRate(this.runs, this.balls)
+        }
+      },
+      bowler: {
+        name: 'Bowler',
+        o: 0,
+        m: 0,
+        r: 0,
+        w: 0,
+        econ: 0
+      },
+      runRate: function() {
+        return runRate(this.runs, this.overs, this.balls);
+      }
     };
-    
+
     ss.innings = new Innings(ss.currentInnings.order, (battingTeam || 'Team 1'));
     ss.inningss.push(ss.innings);
     console.log(ss.battingTeam);
@@ -87,17 +123,55 @@ function dataservice() {
     ss.currentInnings.overs ++;
     ss.currentInnings.balls = 0;
     ss.over = new Over(ss.currentInnings.overs, 'Pavillion End');
-    ss.currentOver = [];
+    ss.currentOver = {
+      deliveries: [],
+      legalDeliveries: 0
+    };
     ss.overs.push(ss.over);
   };
 
-  function newBall(bowlerId, batsmanId, batRuns, wicket, extraRuns, extraType) {
+  function newBall(bowlerId, batsman, batRuns, nonStriker, wicket, extraRuns, extraType) {
     ss.currentInnings.balls ++;
-    ss.ball = new Ball(ss.currentInnings, bowlerId, batsmanId, batRuns, wicket, extraRuns, extraType);
+    ss.ball = new Ball(ss.currentInnings, bowlerId, batsman, batRuns, nonStriker, wicket, extraRuns, extraType);
     ss.balls.push(ss.ball);
-    ss.currentOver.push(ss.ball);
+
+    updateBatScore(batsman, batRuns);
+
+    ss.currentOver.deliveries.push(ss.ball);
     ss.currentInnings.runs += (batRuns + extraRuns);
     ss.currentInnings.wickets += wicket;
+    ss.currentInnings.matchEquation = "Current Run Rate: " + ss.currentInnings.runRate();
+    if (extraType != ('nb' || 'wd')) { ss.currentOver.legalDeliveries += 1 };
+    if (batRuns%2 != 0) { rotateStrike() }; // Fix for extras
+  };
+
+  function updateBatScore(batsman, runs) {
+    batsman.runs += runs;
+    batsman.balls += 1;
+    if (runs === 4) { batsman.fours += 1};
+    if (runs === 6) { batsman.sixes += 1};
+  }
+
+  function rotateStrike() {
+    ss.currentInnings.batOne.onStrike = !ss.currentInnings.batOne.onStrike;
+    ss.currentInnings.batTwo.onStrike = !ss.currentInnings.batTwo.onStrike;
+  };
+
+  function runRate(runs, overs, balls) {
+    if (balls > 0) {
+      var overs = overs + (balls / 6);
+      return Number(Math.round((runs / overs)+'e2')+'e-2').toFixed(2);
+    } else {
+      return 0.00;
+    }
+  };
+
+  function strikeRate(runs, balls) {
+    if (balls > 0) {
+      return Math.round((runs / balls) * 100);
+    } else {
+      return 0;
+    }
   };
 
   function currentMatch() {
@@ -128,11 +202,12 @@ function dataservice() {
     this.end = end;
   };
 
-  function Ball(ballId, bowlerId, batsmanId, batRuns, wicket, extraRuns, extraType, overId, inningsId) {
+  function Ball(ballId, bowlerId, batsmanId, batRuns, nonStriker, wicket, extraRuns, extraType, overId, inningsId) {
     this.ballId = ballId;
     this.bowler = bowlerId;
     this.batsman = batsmanId;
     this.batRuns = batRuns;
+    this.nonStriker = nonStriker;
     this.wicket = wicket;
     this.extraRuns = extraRuns;
     this.extraType = extraType;

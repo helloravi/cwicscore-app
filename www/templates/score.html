@@ -5,7 +5,7 @@
         v {{ s.currentInnings.bowlingTeam.name }} (yet to bat)
       </div>
       <div class="item item-text-wrap text-center match-equation">
-        {{ s.matchEquation }}
+        {{ s.currentInnings.matchEquation }}
       </div>
     </div>
     <div class="list">
@@ -26,7 +26,7 @@
         <div class="col text-center col-10">{{ s.bats.one.fours }}</div>
         <div class="col text-center col-10">{{ s.bats.one.sixes }}</div>
         <div class="col text-center">{{ s.bats.one.balls }}</div>
-        <div class="col text-center">{{ s.bats.one.sr }}</div>
+        <div class="col text-center">{{ s.bats.one.sr() }}</div>
       </div>
       <div class="row item" ng-class="{ 'active-player': s.onStrike === s.bats.two}">
         <div class="col col-33">
@@ -37,7 +37,7 @@
         <div class="col text-center col-10">{{ s.bats.two.fours }}</div>
         <div class="col text-center col-10">{{ s.bats.two.sixes }}</div>
         <div class="col text-center">{{ s.bats.two.balls }}</div>
-        <div class="col text-center">{{ s.bats.two.sr }}</div>
+        <div class="col text-center">{{ s.bats.two.sr() }}</div>
       </div>
     </div>
     <div class="list">
@@ -62,7 +62,7 @@
       <div class="row item-divider current-over">
         <div class="col col-33">This Over</div>
         <div class="col">
-          <span ng-repeat="delivery in s.over track by $index">
+          <span ng-repeat="delivery in s.over.deliveries track by $index">
             <span ng-if="delivery.batRuns + delivery.extraRuns != '0'">{{ delivery.batRuns + delivery.extraRuns }}</span><sup>{{ delivery.extraType }}</sup>
             <i ng-if="delivery.batRuns + delivery.extraRuns == '0'" class="icon ion-record size-14"></i>
           </span>

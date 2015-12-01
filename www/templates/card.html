@@ -1,0 +1,77 @@
+<ion-view view-title="{{ c.currentInnings.battingTeam.name }} {{ c.currentInnings.runs }}-{{ c.currentInnings.wickets }}, {{ c.currentInnings.overs }}.{{ c.currentInnings.balls }} overs">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider text-center">
+        v {{ c.currentInnings.bowlingTeam.name }} (yet to bat)
+      </div>
+      <div class="item item-text-wrap text-center match-equation">
+        {{ c.matchEquation }}
+      </div>
+    </div>
+    <div class="list">
+      <div class="row bat-header item-divider">
+        <div class="col col-33">Bat</div>
+        <div class="col text-center">Runs</div>
+        <div class="col text-center col-10">4s</div>
+        <div class="col text-center col-10">6s</div>
+        <div class="col text-center">Balls</div>
+        <div class="col text-center">SR</div>
+      </div>
+      <div class="row item" ng-class="{ 'active-player': c.onStrike === c.bats.one}">
+        <div class="col col-33">
+          {{ c.bats.one.name }}
+          <span ng-if="c.onStrike === c.bats.one">*</span>
+        </div>
+        <div class="col text-center">{{ c.bats.one.runs }}</div>
+        <div class="col text-center col-10">{{ c.bats.one.fours }}</div>
+        <div class="col text-center col-10">{{ c.bats.one.sixes }}</div>
+        <div class="col text-center">{{ c.bats.one.balls }}</div>
+        <div class="col text-center">{{ c.bats.one.sr }}</div>
+      </div>
+      <div class="row item" ng-class="{ 'active-player': c.onStrike === c.bats.two}">
+        <div class="col col-33">
+          {{ c.bats.two.name }}
+          <span ng-if="c.onStrike === c.bats.two">*</span>
+        </div>
+        <div class="col text-center">{{ c.bats.two.runs }}</div>
+        <div class="col text-center col-10">{{ c.bats.two.fours }}</div>
+        <div class="col text-center col-10">{{ c.bats.two.sixes }}</div>
+        <div class="col text-center">{{ c.bats.two.balls }}</div>
+        <div class="col text-center">{{ c.bats.two.sr }}</div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="row bowl-header item-divider">
+        <div class="col col-33">Bowler</div>
+        <div class="col text-center">O</div>
+        <div class="col text-center">M</div>
+        <div class="col text-center">R</div>
+        <div class="col text-center">W</div>
+        <div class="col text-center">Econ</div>
+      </div>
+      <div class="row item">
+        <div class="col col-33">{{ c.bowler.name }}</div>
+        <div class="col text-center">{{ c.bowler.o }}</div>
+        <div class="col text-center">{{ c.bowler.m }}</div>
+        <div class="col text-center">{{ c.bowler.r }}</div>
+        <div class="col text-center">{{ c.bowler.w }}</div>
+        <div class="col text-center">{{ c.bowler.econ }}</div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="row item-divider current-over">
+        <div class="col col-33">This Over</div>
+        <div class="col">
+          <span ng-repeat="delivery in c.over track by $index">
+            <span ng-if="delivery.batRuns + delivery.extraRuns != '0'">{{ delivery.batRuns + delivery.extraRuns }}</span><sup>{{ delivery.extraType }}</sup>
+            <i ng-if="delivery.batRuns + delivery.extraRuns == '0'" class="icon ion-record size-14"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  
+  <div class="fixed-outside">
+    
+  </div>
+</ion-view>
